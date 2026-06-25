@@ -5,20 +5,21 @@ import { CompactCard } from "./FoodCard";
 
 // Emoji per category for panel header flair
 const CATEGORY_EMOJI: Record<Exclude<Category, "All">, string> = {
-  Pizza: "🍕",
-  Burgers: "🍔",
-  Drinks: "🥤",
+  Pizza:    "🍕",
+  Burgers:  "🍔",
+  Drinks:   "🥤",
   Desserts: "🍰",
-  Healthy: "🥗",
+  Healthy:  "🥗",
+  Indian:   "🍛",
 };
 
-// Pastel accent per category (header tint)
 const CATEGORY_COLOR: Record<Exclude<Category, "All">, string> = {
   Pizza:    "from-orange-400 to-amber-400",
   Burgers:  "from-red-400 to-orange-400",
   Drinks:   "from-cyan-400 to-blue-400",
   Desserts: "from-pink-400 to-rose-400",
   Healthy:  "from-green-400 to-emerald-400",
+  Indian:   "from-orange-600 to-red-500",
 };
 
 interface CategoryPanelProps {

@@ -10,6 +10,7 @@ export function getAnimationType(category: Exclude<Category, "All">): AnimationT
     Drinks:   "bubbles",
     Desserts: "sparkles",
     Healthy:  "leaves",
+    Indian:   "fire",   // spicy! 🔥
   };
   return map[category] ?? "none";
 }

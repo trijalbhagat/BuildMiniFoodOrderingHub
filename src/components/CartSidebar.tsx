@@ -10,7 +10,7 @@ interface CartSidebarProps {
   onCheckout: () => void;
 }
 
-const fmt = (n: number) => `$${n.toFixed(2)}`;
+const fmt = (n: number) => `₹${Math.round(n)}`;
 
 export default function CartSidebar({ cart, totalItems, totalPrice, open, onClose, onUpdate, onRemove, onCheckout }: CartSidebarProps) {
   return (

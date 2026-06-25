@@ -69,7 +69,7 @@ export default function ComboCard({ combo, onAddCombo }: ComboCardProps) {
             <div key={item.id} className="flex items-center gap-2">
               <VegDot veg={item.veg} />
               <span className="text-sm text-foreground font-medium flex-1 truncate">{item.name}</span>
-              <span className="text-xs text-muted-foreground tabular-nums shrink-0">${item.price.toFixed(2)}</span>
+              <span className="text-xs text-muted-foreground tabular-nums shrink-0">₹{Math.round(item.price)}</span>
             </div>
           ))}
         </div>
@@ -77,8 +77,8 @@ export default function ComboCard({ combo, onAddCombo }: ComboCardProps) {
         <div className="flex items-end justify-between gap-2">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-extrabold text-foreground tabular-nums">${combo.comboPrice.toFixed(2)}</span>
-              <span className="text-sm text-muted-foreground line-through tabular-nums">${combo.originalPrice.toFixed(2)}</span>
+              <span className="text-2xl font-extrabold text-foreground tabular-nums">₹{Math.round(combo.comboPrice)}</span>
+              <span className="text-sm text-muted-foreground line-through tabular-nums">₹{Math.round(combo.originalPrice)}</span>
             </div>
             <div className="flex items-center gap-1 mt-0.5">
               <Tag size={11} className="text-emerald-500" />

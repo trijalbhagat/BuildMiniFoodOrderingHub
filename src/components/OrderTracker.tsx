@@ -73,7 +73,7 @@ export default function OrderTracker({ visible, onDismiss, orderTotal }: OrderTr
                             : <strong className="text-emerald-500">Delivered!</strong>}
                         </span>
                       </div>
-                      <span className="font-bold text-foreground">${orderTotal.toFixed(2)}</span>
+                      <span className="font-bold text-foreground">₹{Math.round(orderTotal)}</span>
                     </div>
 
                     <div className="relative">

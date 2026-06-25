@@ -10,7 +10,7 @@ interface CheckoutModalProps {
   cart: CartItem[]; totalPrice: number; onPlaceOrder: () => void;
 }
 
-const fmt = (n: number) => `$${n.toFixed(2)}`;
+const fmt = (n: number) => `₹${Math.round(n)}`;
 
 export default function CheckoutModal({ open, onClose, cart, totalPrice, onPlaceOrder }: CheckoutModalProps) {
   const [address, setAddress] = useState("");

@@ -63,7 +63,7 @@ function CompactCard({ item, onAdd }: { item: MenuItem; onAdd: (item: MenuItem) 
             <UrgencyBadge urgency={item.urgency} stockLeft={item.stockLeft} ordersRecent={item.ordersRecent} />
           </div>
         )}
-        <span className="text-xs font-extrabold text-orange-500">${item.price.toFixed(2)}</span>
+        <span className="text-xs font-extrabold text-orange-500">₹{Math.round(item.price)}</span>
       </div>
       <motion.button onClick={handleAdd} whileTap={{ scale: 0.9 }}
         className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-colors ${
@@ -113,7 +113,7 @@ export default function FoodCard({ item, onAdd }: FoodCardProps) {
             <h3 className="font-bold text-[15px] leading-snug text-foreground truncate">{item.name}</h3>
           </div>
           <span className="text-base font-extrabold text-orange-500 shrink-0 tabular-nums">
-            ${item.price.toFixed(2)}
+            ₹{Math.round(item.price)}
           </span>
         </div>
         <div className="flex items-center gap-1.5">
