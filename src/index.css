@@ -1,0 +1,11 @@
+/* Newspaper card dark-mode paper colour */
+.dark .newspaper-paper {
+  background: var(--paper-dark) !important;
+}
+
+/* Root stylesheet — imports fonts, Tailwind, and design tokens.
+   In Vite projects, import this file in src/main.tsx.
+   In this Figma Make sandbox, src/styles/index.css is the active entrypoint. */
+@import './styles/fonts.css';
+@import './styles/tailwind.css';
+@import './styles/theme.css';
