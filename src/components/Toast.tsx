@@ -1,13 +1,7 @@
 import { Toaster } from "sonner";
 
-interface ToastProps {
-  dark: boolean;
-}
+interface ToastProps { dark: boolean; }
 
-/**
- * Wraps sonner's Toaster with app-consistent styling.
- * Call toast() from sonner anywhere in the tree to trigger a notification.
- */
 export default function Toast({ dark }: ToastProps) {
   return (
     <Toaster

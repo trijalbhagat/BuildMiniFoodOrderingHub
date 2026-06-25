@@ -5,141 +5,76 @@ import { Category, CATEGORIES } from "../data/menuItems";
 export type SortOption = "popular" | "price-asc" | "price-desc";
 
 interface SearchAndFiltersProps {
-  search: string;
-  setSearch: (value: string) => void;
-  sort: SortOption;
-  setSort: (sort: SortOption) => void;
-
-  // ── Desktop-only: side-panel mode ─────────────────────────────────────────
+  search: string; setSearch: (v: string) => void;
+  sort: SortOption; setSort: (s: SortOption) => void;
   isDesktop: boolean;
   openPanels: Exclude<Category, "All">[];
   onTogglePanel: (category: Category) => void;
-
-  // ── Mobile-only: normal category filter ───────────────────────────────────
-  activeCategory: Category;
-  setActiveCategory: (category: Category) => void;
-
-  // ── Combo deals toggle ─────────────────────────────────────────────────────
-  combosOpen: boolean;
-  onToggleCombos: () => void;
+  activeCategory: Category; setActiveCategory: (c: Category) => void;
+  combosOpen: boolean; onToggleCombos: () => void;
 }
 
 export default function SearchAndFilters({
-  search,
-  setSearch,
-  sort,
-  setSort,
-  isDesktop,
-  openPanels,
-  onTogglePanel,
-  activeCategory,
-  setActiveCategory,
-  combosOpen,
-  onToggleCombos,
+  search, setSearch, sort, setSort,
+  isDesktop, openPanels, onTogglePanel,
+  activeCategory, setActiveCategory,
+  combosOpen, onToggleCombos,
 }: SearchAndFiltersProps) {
   return (
     <div className="flex flex-col gap-4">
-      {/* Search + Sort row */}
       <div className="flex gap-3 flex-wrap">
         <div className="relative flex-1 min-w-[180px]">
-          <Search
-            size={15}
-            className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
-          />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <input value={search} onChange={e => setSearch(e.target.value)}
             placeholder="Search dishes, ingredients…"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm"
-          />
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-orange-400 text-sm" />
         </div>
-
         <div className="relative">
-          <ArrowUpDown
-            size={13}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
-          />
-          <select
-            value={sort}
-            onChange={(e) => setSort(e.target.value as SortOption)}
-            className="pl-8 pr-8 py-2.5 rounded-xl bg-card border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 appearance-none cursor-pointer"
-          >
+          <ArrowUpDown size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
+          <select value={sort} onChange={e => setSort(e.target.value as SortOption)}
+            className="pl-8 pr-8 py-2.5 rounded-xl bg-card border border-border text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 appearance-none cursor-pointer">
             <option value="popular">Most Popular</option>
             <option value="price-asc">Price: Low → High</option>
             <option value="price-desc">Price: High → Low</option>
           </select>
-          <ChevronDown
-            size={13}
-            className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"
-          />
+          <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
         </div>
       </div>
 
-      {/* Category pills */}
       <div className="flex items-center gap-2 flex-wrap">
-        {CATEGORIES.map((cat) => {
+        {CATEGORIES.map(cat => {
           const isAll = cat === "All";
-
-          // Desktop: pill is "active" if its panel is open
-          const desktopActive =
-            isDesktop && !isAll && openPanels.includes(cat as Exclude<Category, "All">);
-
-          // Mobile: pill is "active" if it matches the selected category
-          const mobileActive = !isDesktop && activeCategory === cat;
-
+          const desktopActive = isDesktop && !isAll && openPanels.includes(cat as Exclude<Category, "All">);
+          const mobileActive  = !isDesktop && activeCategory === cat;
           const isActive = desktopActive || mobileActive;
-
-          const handleClick = () => {
-            if (isDesktop) {
-              onTogglePanel(cat);
-            } else {
-              setActiveCategory(cat);
-            }
-          };
-
           return (
-            <motion.button
-              key={cat}
-              onClick={handleClick}
-              whileTap={{ scale: 0.94 }}
+            <motion.button key={cat} whileTap={{ scale: 0.94 }}
+              onClick={() => isDesktop ? onTogglePanel(cat) : setActiveCategory(cat)}
               className={`relative px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
                 isActive
                   ? "bg-orange-500 text-white shadow-md shadow-orange-200/60 dark:shadow-orange-900/40"
                   : "bg-card border border-border text-muted-foreground hover:border-orange-400 hover:text-orange-500"
-              }`}
-            >
+              }`}>
               {cat}
-              {/* Green dot on desktop panels that are open */}
-              {desktopActive && (
-                <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border border-card" />
-              )}
+              {desktopActive && <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-emerald-400 rounded-full border border-card" />}
             </motion.button>
           );
         })}
 
-        {/* Desktop panel count hint */}
         {isDesktop && openPanels.length > 0 && (
           <span className="flex items-center gap-1 text-xs text-muted-foreground ml-1">
-            <Layers size={12} />
-            {openPanels.length}/3 open
+            <Layers size={12} />{openPanels.length}/3 open
           </span>
         )}
 
-        {/* Combos toggle — always visible */}
-        <motion.button
-          onClick={onToggleCombos}
-          whileTap={{ scale: 0.94 }}
+        <motion.button onClick={onToggleCombos} whileTap={{ scale: 0.94 }}
           className={`relative flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
             combosOpen
               ? "bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-md shadow-purple-200/60 dark:shadow-purple-900/40"
               : "bg-card border border-border text-muted-foreground hover:border-purple-400 hover:text-purple-500"
-          }`}
-        >
-          <Gift size={13} />
-          Combos
-          {combosOpen && (
-            <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-amber-400 rounded-full border border-card" />
-          )}
+          }`}>
+          <Gift size={13} />Combos
+          {combosOpen && <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-amber-400 rounded-full border border-card" />}
         </motion.button>
       </div>
     </div>
